@@ -1,0 +1,80 @@
+BAUTHORS: Robert Lester (rleste01), Craig Cagner (ccagne01)
+
+
+ARCHITECTURE:
+
+ppm_reader.h: Interface for ppm_reader.c
+
+ppm_reader.c: Implementation of the ppm_reader.h interface; reads in a ppm
+              image and trims it to be even, or writes a ppm image
+
+rgb_ypp.h: Interface for rgb_ypp.c
+
+rgb_ypp.c: In compression, transforms an array of Pnm_rgb structs to an array
+           of component_video structs. In decompression, transforms an array 
+           of component_video structs to an array of Pnm_rgb structs. 
+
+ypp_dct.h: Interface for ypp_dct.c
+
+ypp_dct.c: The functions in this file perform the necessary operations to
+           transform the y, pb, and pr values from our component_video struct
+           at each point in the array of those component_video structs to 
+           dctrans structs which hold the a, b, c, d, average pb, and average
+           pr values for 2-by-2 blocks in the array of component_video structs
+
+quantize.h: Interface for quantize.c
+
+quantize.c: The functions in this file perform the necessary operations to
+            quantize the a, b, c, d, pb, and pr values into scaled integers
+            of the correct size for bitpacking
+
+bitpack.c: Implementation of bitpack.h; performs necessary operations to
+           check if a value fits in a given field of a codeword, places new
+           values in a codeword, and gets values from a codeword. 
+
+bitmap.h: Interface for bitmap.c
+
+bitmap.c: Functions in this file help map through the UArray2 of codewords,
+          either packing them via bitpack.h from the a, b, c, d, avg pb, 
+          and avg pr values in our array of dctrans structs, or unpacking
+          the codewords and transforming them back into dctrans structs via
+          bitpack.h
+
+uarray2.h: Interface for uarray2.c
+
+uarray2.c: Implementation of uarray2.h (a 2D representation of a uarray)
+
+ppmdiff.c: Test file which which implemented in order to tell the difference 
+           between our original images and images that we test our file on
+
+compress40.c: Holds functions compress and decompress; compress will utilize
+              functions from all of our helper files in order to compress an
+              image; decompress will utilize functions from all of our 
+              helper files in order to decompress an image
+
+40image.c: Main file, calls compress or decompress from compress40.c to execute
+           a desired image transformation based on arguments
+
+read_bitfile.h: Interface for read_bitfile.c
+
+read_bitfile.c: Functions to read and write bit files
+
+Makefile: compiler
+
+
+
+ACKNOWLEDGEMENTS: Talked with a litany of the comp40 TA's, including but not
+                  limited to Immy, Ryan, Byron, James, Josh, and Jess.
+
+                  Talked with Vichka, Brian, Xenia, and Jun (other comp40
+                  students) about bit math.
+
+CORRECTNESS: As far as we know, all aspects have been implemented correctly.
+
+ANALYSIS TIME: ~15-20 hours
+
+IMPLEMENTATION TIME: ~30-35 hours
+
+
+
+
